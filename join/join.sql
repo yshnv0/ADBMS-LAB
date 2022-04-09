@@ -53,9 +53,55 @@ insert into rating(mov_id,rev_stars)values(305,4);
 select * from rating;
 
 #1
-select movies.mov_title from movies inner join director on movies.dir_id=director.dir_id where director.dir_name="Hitchcock";
+SELECT movies.mov_title FROM movies INNER JOIN director ON movies.dir_id=director.dir_id WHERE director.dir_name="Hitchcock";
 
 #2
+SELECT M.mov_title
+FROM movies M JOIN movie_cast MC 
+ON M.mov_id=MC.mov_id
+WHERE MC.mov_id in (
+SELECT M.mov_id 
+FROM movies M JOIN movie_cast MC 
+ON M.mov_id=MC.mov_id
+GROUP BY M.mov_id 
+HAVING COUNT(MC.act_id)>1)
+GROUP BY MC.act_id 
+HAVING COUNT(MC.mov_id)>1;
+
+#3
+SELECT DISTINCT a.name 
+FROM actor a JOIN movie_cast mc 
+ON a.act_id=mc.act_id 
+JOIN movies m 
+ON m.mov_id=mc.mov_id
+WHERE
+CAST(m.mov_year AS Decimal) < 2000 or
+CAST(m.mov_year AS Decimal) > 2015;
+
+#4
+SELECT m.mov_title,max(r.rev_stars) 'Top Stars' 
+FROM rating r JOIN movies m 
+ON r.mov_id=m.mov_id 
+WHERE r.rev_stars>0 
+GROUP BY m.mov_title 
+ORDER BY m.mov_title ;
+
+#5
+UPDATE rating 
+SET rev_stars=5
+WHERE mov_id IN (
+SELECT m.mov_id
+FROM movies m JOIN director d 
+ON m.dir_id=d.dir_id
+WHERE d.dir_name="steven spielberg");
+
+
+
+
+
+
+
+
 
 
 
