@@ -37,7 +37,7 @@ select * from tb2;
 
 select id,name,inc(id) from tb2;
 
-/* procedure
+/* function
 CREATE DEFINER=`root`@`localhost` FUNCTION `inc`(id int) RETURNS int(11)
 BEGIN
 declare incen int(10);
