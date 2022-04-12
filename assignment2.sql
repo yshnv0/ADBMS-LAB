@@ -84,6 +84,21 @@ select author_name,book_name,price from book where author_name like "A%" or "a%"
 
 #d
 
+/* procedure
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `nob`(author varchar(20))
+BEGIN
+
+select sum(quantity) as totalbooks from book where author_name like author;
+
+END
+
+*/
+
+call nob('Hector Garcia');
+call nob('Paulo Coehlo');
+call nob('Mark Manson');
+call nob('Adam Joan');
 
 #4
 create database comp;
@@ -113,3 +128,4 @@ select dept_no,sum(salary),avg(salary) from emp_details group by dept_no;
 #b
 select sum(employee_salary) as total_salary from administration;
 
+#c
